@@ -1,0 +1,143 @@
+[gd_scene load_steps=20 format=3 uid="uid://bisljbnnqgyjk"]
+
+[ext_resource type="Texture2D" uid="uid://dh5qcrdfuyq10" path="res://Character assets/goober.png" id="1_2fxuf"]
+[ext_resource type="Script" path="res://Scripts/GooberAI.gd" id="1_pa3se"]
+[ext_resource type="Script" path="res://Scripts/Damageable.gd" id="3_2qqug"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r84nr"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnc5r"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_478qe"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j15qd"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gu01"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cw0pd"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5osf"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt8ia"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1min"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybsni"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3psm"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bc0dc"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3udc"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfo4m"]
+atlas = ExtResource("1_2fxuf")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jny36"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r84nr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vnc5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_478qe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j15qd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gu01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cw0pd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o5osf")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt8ia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1min")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ybsni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3psm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bc0dc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3udc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfo4m")
+}],
+"loop": true,
+"name": &"run",
+"speed": 25.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2h8y2"]
+size = Vector2(12, 24)
+
+[node name="GooberAI" type="CharacterBody2D"]
+script = ExtResource("1_pa3se")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jny36")
+animation = &"run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 2)
+shape = SubResource("RectangleShape2D_2h8y2")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.05
+autostart = true
+
+[node name="Damageable" type="Node" parent="."]
+script = ExtResource("3_2qqug")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
